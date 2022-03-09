@@ -3,3 +3,7 @@ node_modules
 dist
 stats.html
 yarn-error.log
+
+# pack files
+logseq-plugin-wrap-hack/
+logseq-plugin-wrap-hack.zip
