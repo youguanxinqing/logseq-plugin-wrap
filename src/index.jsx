@@ -8,6 +8,7 @@ import zhCN from "./translations/zh-CN.json"
 const TOOLBAR_ID = "kef-wrap-toolbar"
 let toolbar
 let textarea
+const useCustMark = true
 
 async function main() {
   // Reset values.
@@ -57,10 +58,6 @@ async function main() {
       height: 20px;
     }
 
-    mark {
-      background: #fef3ac !important;
-      color: #262626 !important;
-    }
     span[data-ref="#red"],
     span[data-ref="#green"],
     span[data-ref="#blue"],
@@ -134,7 +131,7 @@ async function main() {
     }, 0)
   }
 
-  parent.document.addEventListener("selectionchange",(e)=> onSelectionChange(e))
+  parent.document.addEventListener("selectionchange", (e) => onSelectionChange(e))
 
   logseq.beforeunload(async () => {
     const mainContentContainer = parent.document.getElementById(
@@ -173,57 +170,58 @@ async function getDefinitions() {
   }
 
   const { preferredFormat } = await logseq.App.getUserConfigs()
+  const getColorMark = (color) => useCustMark ? `[:mark {:class "${color}"} "$^"]`: `[[${color}]]==$^==`
   return [
     {
       key: "wrap-page",
-      label: lang === "zh-CN" ? "创建链接" : "Page",
+      label: t("Wrap as page"),
       binding: "",
       template: "[[$^]]",
       icon: `<svg t="1645787758322" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2310" width="200" height="200"><path d="M550.88 20.15h262.24v131.12H682v721.16h131.12v131.12H550.88V20.15z" p-id="2311" fill="#eeeeee"></path></svg>`,
-  },
-  {
+    },
+    {
       key: "wrap-bold",
-      label: lang === "zh-CN" ? "粗体" : "Bold",
+      label: t("Wrap as bold text"),
       binding: "",
       template: "**$^**",
       icon: `<svg t="1645771993393" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4784" width="200" height="200"><path d="M768.96 575.072c-22.144-34.112-54.816-56.8-97.984-68.032v-2.176c22.88-10.88 42.112-23.04 57.696-36.48 15.616-12.704 27.584-26.144 35.936-40.288 16.32-29.76 24.128-60.96 23.392-93.632 0-63.872-19.776-115.232-59.328-154.08-39.2-38.464-97.824-58.048-175.84-58.784H215.232v793.728H579.52c62.432 0 114.496-20.864 156.256-62.624 42.112-39.936 63.52-94.176 64.224-162.752 0-41.376-10.336-79.68-31.04-114.88zM344.32 228.832h194.912c43.904 0.736 76.224 11.424 96.896 32.128 21.056 22.144 31.584 49.184 31.584 81.12s-10.528 58.432-31.584 79.488c-20.672 22.848-52.992 34.304-96.896 34.304H344.32V228.832z m304.352 536.256c-20.672 23.584-53.344 35.744-97.984 36.48H344.32v-238.432h206.336c44.64 0.704 77.312 12.512 97.984 35.392 20.672 23.232 31.04 51.168 31.04 83.84 0 31.904-10.336 59.488-31.008 82.72z" p-id="4785" fill="#eeeeee"></path></svg>`,
-  },
-  {
+    },
+    {
       key: "wrap-underline",
-      label: lang === "zh-CN" ? "下划线" : "underline",
+      label: t("Wrap as underline text"),
       binding: "",
       template: "[:u \"$^\"]",
       icon: `<svg t="1645771982354" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4586" width="200" height="200"><path d="M512 811.296a312 312 0 0 0 312-312V89.6h-112v409.696a200 200 0 1 1-400 0V89.6h-112v409.696a312 312 0 0 0 312 312zM864 885.792H160a32 32 0 0 0 0 64h704a32 32 0 0 0 0-64z" p-id="4587" fill="#eeeeee"></path></svg>`,
-  },
-  {
+    },
+    {
       key: "wrap-delline",
-      label: lang === "zh-CN" ? "删除线" : "Delline",
+      label: t("Wrap as delline text"),
       binding: "",
       template: "~~$^~~",
       icon: `<svg t="1645771956831" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4340" width="200" height="200"><path d="M893.088 501.792H125.344a32 32 0 0 0 0 64h767.744a32 32 0 0 0 0-64zM448 448h112V208h288V96H160v112h288zM448 640h112v288H448z" p-id="4341" fill="#eeeeee"></path></svg>`,
-  },
-  {
+    },
+    {
       key: "wrap-italic",
-      label: lang === "zh-CN" ? "斜体" : "italic",
+      label: t("Wrap as italic text"),
       binding: "",
       template: "_$^_",
       icon: `<svg t="1645772015907" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4982" width="200" height="200"><path d="M768 85.792h-288a32 32 0 0 0 0 64h96.32l-230.336 704H256a32 32 0 0 0 0 64h288a32 32 0 0 0 0-64h-93.728l230.528-704H768a32 32 0 0 0 0-64z" p-id="4983" fill="#eeeeee"></path></svg>`,
-  },
-  {
+    },
+    {
       key: "wrap-inlinecode",
-      label: lang === "zh-CN" ? "行内代码" : "inlinecode",
+      label: t("Wrap as inlinecode"),
       binding: "",
       template: "`$^`",
       icon: `<svg t="1645771863465" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13069" width="200" height="200"><path d="M300.224 224L32 525.76l268.224 301.76 71.776-63.776-211.552-237.984 211.552-237.984zM711.744 224L640 287.776l211.552 237.984L640 763.744l71.744 63.776 268.256-301.76z" p-id="13070" fill="#eeeeee"></path></svg>`,
-  },
-  {
+    },
+    {
       key: "wrap-formular",
-      label: lang === "zh-CN" ? "公式" : "formular",
+      label: t("Wrap as formular"),
       binding: "",
       template: "$$$^$$",
       icon: `<svg t="1645767612297" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3054" width="200" height="200"><path d="M552.0896 565.90336L606.03392 512l-53.94432-53.90336L290.6112 196.83328l551.0144-0.29696v-76.25728l-659.17952 0.3584v76.25728L498.14528 512 182.3744 827.50464v75.85792l659.17952 0.3584v-76.25728l-551.0144-0.29696 261.55008-261.26336" p-id="3055" fill="#eeeeee"></path></svg>`,
-  },
-  
+    },
+
     {
       key: "wrap-cloze",
       label: t("Wrap with cloze"),
@@ -235,7 +233,7 @@ async function getDefinitions() {
       key: "wrap-red-hl",
       label: t("Wrap with red highlight"),
       binding: "",
-      template: preferredFormat === "org" ? "[[#red]]^^$^^^" : "[[#red]]==$^==",
+      template: preferredFormat === "org" ? "[[#red]]^^$^^^" : getColorMark("#red"),
       icon: `<svg t="1643262039637" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6950" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M114.727313 1024l0.305421-0.427589h-0.977347l0.671926 0.427589zM632.721199 809.365446c-156.680934 0-272.466006 41.644143-341.659116 75.927642L290.878831 972.108985C340.402833 942.605324 458.249497 885.720677 632.73647 885.720677H962.804862v-76.355231H632.73647z m-109.432317-72.018253l252.048617-528.378197a38.177615 38.177615 0 0 0-13.621773-48.790993L551.295981 24.464216a38.192886 38.192886 0 0 0-50.089031 7.696607L130.349594 483.908911a38.208157 38.208157 0 0 0-7.024682 35.886958c31.763776 100.315502 36.436716 182.626441 34.695817 234.777064L94.477906 870.449631h132.094549l32.221908-42.606219c49.78361-25.624815 134.15614-60.931474 233.326314-69.177839a38.147073 38.147073 0 0 0 31.152934-21.31838z m-59.343285-52.54767c-71.66702 8.505973-134.950235 28.572127-184.489509 49.157497l-45.339736-29.244053c-2.290657-50.883126-10.613377-114.716099-31.901215-187.849139l336.161539-409.874879 153.474014 98.986922-193.728492 408.653195-176.838714-112.746134-47.935814 60.015211 191.117142 121.847678-0.519215 1.053702z" p-id="6951" fill="#ffc7c7"></path></svg>`,
     },
     {
@@ -243,7 +241,7 @@ async function getDefinitions() {
       label: t("Wrap with green highlight"),
       binding: "",
       template:
-        preferredFormat === "org" ? "[[#green]]^^$^^^" : "[[#green]]==$^==",
+        preferredFormat === "org" ? "[[#green]]^^$^^^" : getColorMark("[#green"),
       icon: `<svg t="1643262039637" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6950" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M114.727313 1024l0.305421-0.427589h-0.977347l0.671926 0.427589zM632.721199 809.365446c-156.680934 0-272.466006 41.644143-341.659116 75.927642L290.878831 972.108985C340.402833 942.605324 458.249497 885.720677 632.73647 885.720677H962.804862v-76.355231H632.73647z m-109.432317-72.018253l252.048617-528.378197a38.177615 38.177615 0 0 0-13.621773-48.790993L551.295981 24.464216a38.192886 38.192886 0 0 0-50.089031 7.696607L130.349594 483.908911a38.208157 38.208157 0 0 0-7.024682 35.886958c31.763776 100.315502 36.436716 182.626441 34.695817 234.777064L94.477906 870.449631h132.094549l32.221908-42.606219c49.78361-25.624815 134.15614-60.931474 233.326314-69.177839a38.147073 38.147073 0 0 0 31.152934-21.31838z m-59.343285-52.54767c-71.66702 8.505973-134.950235 28.572127-184.489509 49.157497l-45.339736-29.244053c-2.290657-50.883126-10.613377-114.716099-31.901215-187.849139l336.161539-409.874879 153.474014 98.986922-193.728492 408.653195-176.838714-112.746134-47.935814 60.015211 191.117142 121.847678-0.519215 1.053702z" p-id="6951" fill="#ccffc1"></path></svg>`,
     },
     {
@@ -251,14 +249,14 @@ async function getDefinitions() {
       label: t("Wrap with blue highlight"),
       binding: "",
       template:
-        preferredFormat === "org" ? "[[#blue]]^^$^^^" : "[[#blue]]==$^==",
+        preferredFormat === "org" ? "[[#blue]]^^$^^^" : getColorMark("#blue"),
       icon: `<svg t="1643262039637" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6950" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M114.727313 1024l0.305421-0.427589h-0.977347l0.671926 0.427589zM632.721199 809.365446c-156.680934 0-272.466006 41.644143-341.659116 75.927642L290.878831 972.108985C340.402833 942.605324 458.249497 885.720677 632.73647 885.720677H962.804862v-76.355231H632.73647z m-109.432317-72.018253l252.048617-528.378197a38.177615 38.177615 0 0 0-13.621773-48.790993L551.295981 24.464216a38.192886 38.192886 0 0 0-50.089031 7.696607L130.349594 483.908911a38.208157 38.208157 0 0 0-7.024682 35.886958c31.763776 100.315502 36.436716 182.626441 34.695817 234.777064L94.477906 870.449631h132.094549l32.221908-42.606219c49.78361-25.624815 134.15614-60.931474 233.326314-69.177839a38.147073 38.147073 0 0 0 31.152934-21.31838z m-59.343285-52.54767c-71.66702 8.505973-134.950235 28.572127-184.489509 49.157497l-45.339736-29.244053c-2.290657-50.883126-10.613377-114.716099-31.901215-187.849139l336.161539-409.874879 153.474014 98.986922-193.728492 408.653195-176.838714-112.746134-47.935814 60.015211 191.117142 121.847678-0.519215 1.053702z" p-id="6951" fill="#abdfff"></path></svg>`,
     },
     {
       key: "wrap-red-text",
       label: t("Wrap with red text"),
       binding: "",
-      template: preferredFormat === "org" ? "[[$red]]^^$^^^" : "[[$red]]==$^==",
+      template: preferredFormat === "org" ? "[[$red]]^^$^^^" : getColorMark("$red"),
       icon: `<svg t="1643270432116" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12761" width="200" height="200"><path d="M256 768h512a85.333333 85.333333 0 0 1 85.333333 85.333333v42.666667a85.333333 85.333333 0 0 1-85.333333 85.333333H256a85.333333 85.333333 0 0 1-85.333333-85.333333v-42.666667a85.333333 85.333333 0 0 1 85.333333-85.333333z m0 85.333333v42.666667h512v-42.666667H256z m401.578667-341.333333H366.421333L298.666667 682.666667H213.333333l256.128-640H554.666667l256 640h-85.333334l-67.754666-170.666667z m-33.877334-85.333333L512 145.365333 400.298667 426.666667h223.402666z" p-id="12762" fill="#f00"></path></svg>`,
     },
     {
@@ -266,7 +264,7 @@ async function getDefinitions() {
       label: t("Wrap with green text"),
       binding: "",
       template:
-        preferredFormat === "org" ? "[[$green]]^^$^^^" : "[[$green]]==$^==",
+        preferredFormat === "org" ? "[[$green]]^^$^^^" : getColorMark("$green"),
       icon: `<svg t="1643270432116" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12761" width="200" height="200"><path d="M256 768h512a85.333333 85.333333 0 0 1 85.333333 85.333333v42.666667a85.333333 85.333333 0 0 1-85.333333 85.333333H256a85.333333 85.333333 0 0 1-85.333333-85.333333v-42.666667a85.333333 85.333333 0 0 1 85.333333-85.333333z m0 85.333333v42.666667h512v-42.666667H256z m401.578667-341.333333H366.421333L298.666667 682.666667H213.333333l256.128-640H554.666667l256 640h-85.333334l-67.754666-170.666667z m-33.877334-85.333333L512 145.365333 400.298667 426.666667h223.402666z" p-id="12762" fill="#0f0"></path></svg>`,
     },
     {
@@ -274,15 +272,15 @@ async function getDefinitions() {
       label: t("Wrap with blue text"),
       binding: "",
       template:
-        preferredFormat === "org" ? "[[$blue]]^^$^^^" : "[[$blue]]==$^==",
+        preferredFormat === "org" ? "[[$blue]]^^$^^^" : getColorMark("$blue"),
       icon: `<svg t="1643270432116" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12761" width="200" height="200"><path d="M256 768h512a85.333333 85.333333 0 0 1 85.333333 85.333333v42.666667a85.333333 85.333333 0 0 1-85.333333 85.333333H256a85.333333 85.333333 0 0 1-85.333333-85.333333v-42.666667a85.333333 85.333333 0 0 1 85.333333-85.333333z m0 85.333333v42.666667h512v-42.666667H256z m401.578667-341.333333H366.421333L298.666667 682.666667H213.333333l256.128-640H554.666667l256 640h-85.333334l-67.754666-170.666667z m-33.877334-85.333333L512 145.365333 400.298667 426.666667h223.402666z" p-id="12762" fill="#00beff"></path></svg>`,
     },
     {
       key: "repl-clear",
       label: t("Remove formatting"),
       binding: "mod+shift+x",
-      regex: `\\[\\[(?:#|\\$)(?:red|green|blue)\\]\\]|==([^=]*)==|\\^\\^([^\\^]*)\\^\\^|\\*\\*([^\\*]*)\\*\\*|\\*([^\\*]*)\\*|_([^_]*)_|\\$([^\\$]*)\\$|\`([^\`]*)\`|\\[:u\\s+"([^"]*)"\\]|~~.*?~~`,
-      replacement: "$1$2$3$4$5$6$7$8",
+      regex: `\\[\\[(?:#|\\$)(?:red|green|blue)\\]\\]|==([^=]*)==|~~([^~]*)~~|\\^\\^([^\\^]*)\\^\\^|\\*\\*([^\\*]*)\\*\\*|\\*([^\\*]*)\\*|_([^_]*)_|\\$([^\\$]*)\\$|\`([^\`]*)\`|\\[:mark\\s+{:class\\s+\"(?:\\$|#)?(?:yellow|pink|blue|green|red|grey|gray|orange|purple)\"}\\s+\"(.*?)\"\\]|\\[:u\\s+\"([^\"]*)\"\\]`,
+      replacement: "$1$2$3$4$5$6$7$8$9$10",
       icon: `<svg t="1643381967522" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1377" width="200" height="200"><path d="M824.4 438.8c0-37.6-30-67.6-67.6-67.6l-135.2 0L621.6 104.8c0-37.6-30-67.6-67.6-67.6-37.6 0-67.6 30-67.6 67.6l0 266.4L358.8 371.2c-37.6 0-67.6 30-67.6 67.6l0 67.6L828 506.4l0-67.6L824.4 438.8 824.4 438.8zM824.4 574c-11.2 0-536.8 0-536.8 0S250 972 88.4 972L280 972c75.2 0 108.8-217.6 108.8-217.6s33.6 195.2 3.6 217.6l105.2 0c-3.6 0 0 0 11.2 0 52.4-7.6 60-247.6 60-247.6s52.4 244 45.2 244c-26.4 0-78.8 0-105.2 0l0 0 154 0c-7.6 0 0 0 11.2 0 48.8-11.2 52.4-187.6 52.4-187.6s22.4 187.6 15.2 187.6c-18.8 0-48.8 0-67.6 0l-3.6 0 90 0C895.6 972 903.2 784.4 824.4 574L824.4 574z" p-id="1378" fill="#eeeeee"></path></svg>`,
     },
   ]
@@ -370,9 +368,8 @@ async function positionToolbar() {
     ) {
       toolbar.style.left = `${curPos.left + curPos.rect.x}px`
     } else {
-      toolbar.style.left = `${
-        -toolbar.clientWidth + parent.window.innerWidth
-      }px`
+      toolbar.style.left = `${-toolbar.clientWidth + parent.window.innerWidth
+        }px`
     }
     toolbar.style.opacity = "1"
   }
