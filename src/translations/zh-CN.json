@@ -13,5 +13,6 @@
   "Wrap as delline text": "包围成删除线文字",
   "Wrap as italic text": "包围成斜体文字",
   "Wrap as formular": "包围成公式",
-  "This command can only be used when editing text": "该命令仅在编辑文字时可使用"
+  "This command can only be used when editing text": "该命令仅在编辑文字时可使用",
+  "Toggle toolbar display": "切换工具条显示"
 }
