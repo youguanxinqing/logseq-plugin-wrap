@@ -8,7 +8,7 @@ import zhCN from "./translations/zh-CN.json"
 const TOOLBAR_ID = "kef-wrap-toolbar"
 let toolbar
 let textarea
-const useCustMark = true
+const useCustMark = false
 
 async function main() {
   // Reset values.
