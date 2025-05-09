@@ -212,7 +212,7 @@ dompurify@2.3.8:
 
 dot-case@^3.0.4:
   version "3.0.4"
-  resolved "https://registry.nlark.com/dot-case/download/dot-case-3.0.4.tgz#9b2b670d00a431667a8a75ba29cd1b98809ce751"
+  resolved "https://registry.npmmirror.com/dot-case/download/dot-case-3.0.4.tgz#9b2b670d00a431667a8a75ba29cd1b98809ce751"
   integrity sha1-mytnDQCkMWZ6inW6Kc0bmICc51E=
   dependencies:
     no-case "^3.0.4"
@@ -287,7 +287,7 @@ inherits@2:
 
 inherits@2.0.3:
   version "2.0.3"
-  resolved "https://registry.nlark.com/inherits/download/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
+  resolved "https://registry.npmmirror.com/inherits/download/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 is-builtin-module@^3.1.0:
@@ -331,7 +331,7 @@ logseq-l10n@^0.2.0:
 
 lower-case@^2.0.2:
   version "2.0.2"
-  resolved "https://registry.nlark.com/lower-case/download/lower-case-2.0.2.tgz?cache=0&sync_timestamp=1624607698082&other_urls=https%3A%2F%2Fregistry.nlark.com%2Flower-case%2Fdownload%2Flower-case-2.0.2.tgz#6fa237c63dbdc4a82ca0fd882e4722dc5e634e28"
+  resolved "https://registry.npmmirror.com/lower-case/download/lower-case-2.0.2.tgz?cache=0&sync_timestamp=1624607698082&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Flower-case%2Fdownload%2Flower-case-2.0.2.tgz#6fa237c63dbdc4a82ca0fd882e4722dc5e634e28"
   integrity sha1-b6I3xj29xKgsoP2ILkci3F5jTig=
   dependencies:
     tslib "^2.0.3"
@@ -367,7 +367,7 @@ ms@2.1.2:
 
 no-case@^3.0.4:
   version "3.0.4"
-  resolved "https://registry.nlark.com/no-case/download/no-case-3.0.4.tgz#d361fd5c9800f558551a8369fc0dcd4662b6124d"
+  resolved "https://registry.npmmirror.com/no-case/download/no-case-3.0.4.tgz#d361fd5c9800f558551a8369fc0dcd4662b6124d"
   integrity sha1-02H9XJgA9VhVGoNp/A3NRmK2Ek0=
   dependencies:
     lower-case "^2.0.2"
